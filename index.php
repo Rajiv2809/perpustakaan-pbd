@@ -1,8 +1,15 @@
 <?php
 // index.php — Halaman daftar buku (Read)
-session_start();
+define('BASE_URL', '/perpustakaan/');
 require_once 'includes/db.php';
+require_once 'includes/auth.php';
 require_once 'includes/layout.php';
+require_login();
+
+// Flash messages
+$success = flash('success');
+$error   = flash('error');
+$reg_ok  = flash('reg_success');
 
 // Search
 $search = trim($_GET['q'] ?? '');
@@ -17,25 +24,24 @@ if ($search !== '') {
     $types  = 'sss';
 }
 
-// Hitung total & statistik
-$total_buku  = $conn->query("SELECT COUNT(*) AS c FROM buku")->fetch_assoc()['c'];
-$total_stok  = $conn->query("SELECT SUM(stok) AS s FROM buku")->fetch_assoc()['s'] ?? 0;
-$total_kat   = $conn->query("SELECT COUNT(DISTINCT kategori) AS k FROM buku")->fetch_assoc()['k'];
+// Statistik
+$total_buku = $conn->query("SELECT COUNT(*) AS c FROM buku")->fetch_assoc()['c'];
+$total_stok = $conn->query("SELECT SUM(stok) AS s FROM buku")->fetch_assoc()['s'] ?? 0;
+$total_kat  = $conn->query("SELECT COUNT(DISTINCT kategori) AS k FROM buku")->fetch_assoc()['k'];
 
-// Ambil data buku
+// Data buku
 $sql  = "SELECT * FROM buku $where ORDER BY created_at DESC";
 $stmt = $conn->prepare($sql);
 if ($params) $stmt->bind_param($types, ...$params);
 $stmt->execute();
-$result = $stmt->get_result();
-$buku_list = $result->fetch_all(MYSQLI_ASSOC);
+$buku_list = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 render_header('Daftar Buku');
 ?>
 
-<?php $msg = flash('success'); if ($msg): ?>
-  <div class="alert alert-success">✓ <?= htmlspecialchars($msg) ?></div>
-<?php endif; ?>
+<?php if ($reg_ok):  ?><div class="alert alert-success">✓ <?= htmlspecialchars($reg_ok) ?></div><?php endif; ?>
+<?php if ($success): ?><div class="alert alert-success">✓ <?= htmlspecialchars($success) ?></div><?php endif; ?>
+<?php if ($error):   ?><div class="alert alert-error">⚠ <?= htmlspecialchars($error) ?></div><?php endif; ?>
 
 <!-- Stats -->
 <div class="stats-row">
@@ -85,9 +91,7 @@ render_header('Daftar Buku');
     </thead>
     <tbody>
     <?php if (empty($buku_list)): ?>
-      <tr class="empty-row">
-        <td colspan="8">📭 Tidak ada buku ditemukan.</td>
-      </tr>
+      <tr class="empty-row"><td colspan="8">📭 Tidak ada buku ditemukan.</td></tr>
     <?php else: ?>
       <?php foreach ($buku_list as $i => $b): ?>
         <?php

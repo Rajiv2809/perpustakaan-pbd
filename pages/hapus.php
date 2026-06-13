@@ -1,12 +1,13 @@
 <?php
 // pages/hapus.php — Hapus buku (Delete)
-session_start();
+define('BASE_URL', '/perpustakaan/');
 require_once '../includes/db.php';
+require_once '../includes/auth.php';
+require_login();
 
 $id = (int)($_GET['id'] ?? 0);
 
 if ($id > 0) {
-    // Ambil judul dulu untuk pesan konfirmasi
     $sel = $conn->prepare("SELECT judul FROM buku WHERE id = ?");
     $sel->bind_param('i', $id);
     $sel->execute();
@@ -20,5 +21,5 @@ if ($id > 0) {
     }
 }
 
-header('Location: ../index.php');
+header('Location: ' . BASE_URL . 'index.php');
 exit;

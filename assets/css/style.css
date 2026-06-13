@@ -314,3 +314,60 @@ footer {
   border-top: 1px solid var(--border);
   margin-top: auto;
 }
+
+/* ── Navbar update (auth) ── */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.nav-user-info {
+  color: rgba(255,255,255,.85);
+  font-size: .85rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.role-badge {
+  font-size: .7rem;
+  padding: .15rem .5rem;
+  border-radius: 99px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.role-admin   { background: #FFD166; color: #7D5A1E; }
+.role-petugas { background: rgba(255,255,255,.25); color: #fff; }
+
+.nav-btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,.55);
+}
+.nav-btn-outline:hover { background: rgba(255,255,255,.12); opacity: 1; }
+.nav-btn-logout {
+  background: rgba(255,255,255,.15);
+  color: #fff;
+  font-size: .82rem;
+  padding: .35rem .9rem;
+}
+.nav-btn-logout:hover { background: rgba(255,255,255,.28); opacity: 1; }
+
+/* ── User management table ── */
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--accent-lt);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: .9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
