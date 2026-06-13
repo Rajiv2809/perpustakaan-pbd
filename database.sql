@@ -57,11 +57,12 @@ INSERT INTO buku (judul, pengarang, penerbit, tahun_terbit, kategori, stok) VALU
 --   petugas  -> petugas123
 -- ============================================
 INSERT INTO users (nama, username, password, role) VALUES
-  ('Administrator',
-   'admin',
-   '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-   'admin'),
-  ('Petugas Perpustakaan',
-   'petugas',
-   '$2y$10$TKh8H1.PFgs8UNoBxB4sOODS5I.tvDdoHuO3lMOjYoJEsXEVYD1Pu',
-   'petugas');
+('Administrator',
+ 'admin',
+ '$2y$12$zLUJW0HTrnYjyhgmnBHqGOV8jCpKFkYFpTdLy0eyJS9bed9LWZIyO',
+ 'admin'),
+
+('Petugas Perpustakaan',
+ 'petugas',
+ '$2y$12$33x3xAJHZH/Ei85E/ACiGumulpNSvqt7o0Owo0WF1w7sl6o546AXW',
+ 'petugas');
